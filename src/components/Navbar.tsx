@@ -1,12 +1,12 @@
 import { useState } from "react";
-import MobileNavMenu from "./mobileNavMenu";
+import MobileNavMenu from "./MobileNavMenu";
 
 const Navbar = () => {
   const [burgerClicked, setBurgerClicked] = useState<Boolean>(false);
   return (
     <div className="w-screen pt-5">
       <nav
-        className="w-[90%] mx-auto mt-4 px-6 py-3 
+        className=" w-[90%] sm:w-[70%] mx-auto mt-4 px-6 py-3 
   rounded-2xl flex justify-between items-center 
   bg-white/10 backdrop-blur-md 
   shadow-xl ring-1 ring-white/20"
@@ -44,7 +44,7 @@ const Navbar = () => {
           </div>
         </button>
       </nav>
-      {burgerClicked && <MobileNavMenu  />}
+      {burgerClicked && <MobileNavMenu />}
     </div>
   );
 };
