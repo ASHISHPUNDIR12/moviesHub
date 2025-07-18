@@ -13,9 +13,9 @@ const Navbar = () => {
       >
         <div className="text-white font-thin text-2xl ">MovieHub</div>
         <ul className=" hidden  sm:flex sm:gap-10 text-gray-100 ">
-          <a href="#">Home</a>
+          <a href="/">Home</a>
           <a href="#">About us </a>
-          <a href="#">Github</a>
+          <a target="_blank" href="https://github.com/ASHISHPUNDIR12/moviesHub">Github</a>
         </ul>
 
         <button

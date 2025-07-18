@@ -53,7 +53,7 @@ const Leftside = ({ input , onMovieSelect }: leftsideProps) => {
           })
         ) : (
           <>
-            <p className="text-sm text-slate-300">No movies found.</p>
+            <p className=" font-semibold text-[18px] text-center text-white">No movies found.</p>
           </>
         )}
       </div>

@@ -8,7 +8,7 @@ const MainSection = () => {
   const handleMovieSelect = (id:string)=>{
     setSelectMovie(id)
   }
-  console.log(input);
+
   return (
     <div>
       <div className=" w-[90%] sm:w-[70%] mx-auto">
@@ -32,7 +32,7 @@ const MainSection = () => {
           <div className="h-1/2 sm:h-full w-full sm:w-1/2 border rounded  border-slate-400">
             <Leftside input={input} onMovieSelect={handleMovieSelect}   />
           </div>
-          <div className="h-1/2 sm:h-full w-full sm:w-1/2 border rounded  border-slate-400">
+          <div className="h-full sm:h-full w-full sm:w-1/2 border rounded  border-slate-400">
             <Rightside imdbId={selectedMovie} />
           </div>
         </div>
