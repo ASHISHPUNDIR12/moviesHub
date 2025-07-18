@@ -7,6 +7,7 @@ import { myApiKey } from "../config";
 //interface define
 interface leftsideProps {
   input: string;
+  onMovieSelect : (id:string)=> void 
 }
 interface Movie {
   Title: string;
@@ -14,7 +15,7 @@ interface Movie {
   Poster: string;
   imdbID: string;
 }
-const Leftside = ({ input }: leftsideProps) => {
+const Leftside = ({ input , onMovieSelect }: leftsideProps) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   useEffect(() => {
     const getData = async () => {
@@ -45,7 +46,8 @@ const Leftside = ({ input }: leftsideProps) => {
                 title={movie.Title}
                 year={movie.Year}
                 imageId={movie.Poster}
-                rating={movie.imdbID}
+                imbId={movie.imdbID}
+                onCardClick = {onMovieSelect}
               />
             );
           })
