@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { myApiKey } from "../config";
 import StarRating from "./StarRating";
 
 interface RightSideProps {
@@ -14,15 +13,16 @@ interface Movie {
   Poster: string;
   Plot: string;
 }
-
 const Rightside = ({ imdbId }: RightSideProps) => {
+  const apiKey = import.meta.env.VITE_OMDB_API_KEY;
+
   const [movie, setMovie] = useState<Movie | null>(null);
   useEffect(() => {
     const getData = async () => {
       try {
         if (!imdbId) return;
         const response = await axios(
-          `https://www.omdbapi.com/?i=${imdbId}&apikey=${myApiKey}`
+          `https://www.omdbapi.com/?i=${imdbId}&apikey=${apiKey}`
         );
         setMovie(response.data);
       } catch (e) {

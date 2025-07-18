@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import SmallMovieCard from "./SmallMovieCard";
 
 import axios from "axios";
-import { myApiKey } from "../config";
 
 //interface define
 interface leftsideProps {
@@ -16,12 +15,14 @@ interface Movie {
   imdbID: string;
 }
 const Leftside = ({ input , onMovieSelect }: leftsideProps) => {
+  const apiKey = import.meta.env.VITE_OMDB_API_KEY;
+
   const [movies, setMovies] = useState<Movie[]>([]);
   useEffect(() => {
     const getData = async () => {
       try {
         const response = await axios(
-          `https://www.omdbapi.com/?s=${input}&apikey=${myApiKey}`
+          `https://www.omdbapi.com/?s=${input}&apikey=${apiKey}`
         );
         console.log(response.data.Search);
         setMovies(response.data.Search || []);
