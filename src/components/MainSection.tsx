@@ -4,6 +4,10 @@ import Rightside from "./Rightside";
 
 const MainSection = () => {
   const [input, setInputValue] = useState<string>("");
+  const [selectedMovie , setSelectMovie] = useState< string | null>(null)
+  const handleMovieSelect = (id:string)=>{
+    setSelectMovie(id)
+  }
   console.log(input);
   return (
     <div>
@@ -26,10 +30,10 @@ const MainSection = () => {
   flex flex-col sm:flex-row h-[500px] sm:w-[80%] mx-auto mt-3 rounded"
         >
           <div className="h-1/2 sm:h-full w-full sm:w-1/2 border rounded  border-slate-400">
-            <Leftside input={input}  />
+            <Leftside input={input} onMovieSelect={handleMovieSelect}   />
           </div>
           <div className="h-1/2 sm:h-full w-full sm:w-1/2 border rounded  border-slate-400">
-            <Rightside />
+            <Rightside imdbId={selectedMovie} />
           </div>
         </div>
       </div>
