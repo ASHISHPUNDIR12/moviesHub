@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { myApiKey } from "../config";
-import Star from "./StarRating";
 import StarRating from "./StarRating";
 
 interface RightSideProps {
