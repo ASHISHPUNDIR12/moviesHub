@@ -6,7 +6,7 @@ import axios from "axios";
 //interface define
 interface leftsideProps {
   input: string;
-  onMovieSelect : (id:string)=> void 
+  onMovieSelect: (id: string) => void;
 }
 interface Movie {
   Title: string;
@@ -14,7 +14,7 @@ interface Movie {
   Poster: string;
   imdbID: string;
 }
-const Leftside = ({ input , onMovieSelect }: leftsideProps) => {
+const Leftside = ({ input, onMovieSelect }: leftsideProps) => {
   const apiKey = import.meta.env.VITE_OMDB_API_KEY;
 
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -48,13 +48,15 @@ const Leftside = ({ input , onMovieSelect }: leftsideProps) => {
                 year={movie.Year}
                 imageId={movie.Poster}
                 imbId={movie.imdbID}
-                onCardClick = {onMovieSelect}
+                onCardClick={onMovieSelect}
               />
             );
           })
         ) : (
           <>
-            <p className=" font-semibold text-[18px] text-center text-white">No movies found.</p>
+            <p className=" font-semibold text-[18px] text-center text-white">
+              No movies found.
+            </p>
           </>
         )}
       </div>
