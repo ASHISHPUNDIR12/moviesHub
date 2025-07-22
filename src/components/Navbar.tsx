@@ -1,8 +1,10 @@
 import { useState } from "react";
 import MobileNavMenu from "./MobileNavMenu";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [burgerClicked, setBurgerClicked] = useState<Boolean>(false);
+  const navigate = useNavigate();
   return (
     <div className="w-screen pt-5">
       <nav
@@ -11,7 +13,9 @@ const Navbar = () => {
   bg-white/10 backdrop-blur-md 
   shadow-xl ring-1 ring-white/20"
       >
-        <div className="text-white font-thin text-2xl ">MovieHub</div>
+        <div onClick={()=>{
+          navigate('/')
+        }} className="text-white font-thin text-2xl ">MovieHub</div>
         <ul className=" hidden  sm:flex sm:gap-10 text-gray-100 ">
           <a href="/">Home</a>
           <a href="#">About us </a>
