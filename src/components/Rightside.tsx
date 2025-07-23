@@ -17,6 +17,8 @@ const Rightside = ({ imdbId }: RightSideProps) => {
   const apiKey = import.meta.env.VITE_OMDB_API_KEY;
 
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [showWatchedMovies, setShowWatchedMovies] = useState(false);
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -32,12 +34,23 @@ const Rightside = ({ imdbId }: RightSideProps) => {
     getData();
   }, [imdbId]);
 
-  if (!movie)
-    return (
-      <p className="text-white text-center text-[18px] font-semibold">
-        Select a movie to see details.
-      </p>
-    );
+if (!movie || showWatchedMovies)
+  return (
+    <div>
+      <div className="flex justify-between p-5 border-b rounded bg-white/10 backdrop-blur-md shadow-xl ring-1 ring-white/20">
+        <p className="text-2xl text-white">
+          Movies you watched 
+        </p>
+        <button 
+          onClick={() => setShowWatchedMovies(false)} 
+          className="border px-2.5 border-red-900 rounded-full text-white bg-red-800 outline-none"
+        >
+          X
+        </button>
+      </div>
+      {/* Add your watched movies list here */}
+    </div>
+  );
 
   return (
     <div className="text-white p-3 space-y-2">
@@ -82,6 +95,21 @@ const Rightside = ({ imdbId }: RightSideProps) => {
       </p>
 
       <StarRating />
+
+      <div className="flex  justify-around ">
+        <button className="border p-1 rounded bg-green-700 outline-none border-green-700 ">
+          Add to my list{" "}
+        </button>
+        <button
+          onClick={() => {
+            setMovie(null);
+            setShowWatchedMovies(true);
+          }}
+          className="border p-1 rounded bg-red-700 outline-none border-red-700"
+        >
+          my list
+        </button>
+      </div>
     </div>
   );
 };
