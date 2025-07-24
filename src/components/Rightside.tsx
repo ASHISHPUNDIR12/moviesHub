@@ -18,6 +18,27 @@ const Rightside = ({ imdbId }: RightSideProps) => {
 
   const [movie, setMovie] = useState<Movie | null>(null);
   const [showWatchedMovies, setShowWatchedMovies] = useState(false);
+  const [watchedMovies, setWatchedMovies] = useState<Movie[]>([]);
+  const [showAlert, setShowAlert] = useState(false);
+
+  // Load watched movies from localStorage when component mounts or showWatchedMovies changes
+  useEffect(() => {
+    if (showWatchedMovies) {
+      const stored = localStorage.getItem("watchedMovies");
+      if (stored) {
+        setWatchedMovies(JSON.parse(stored));
+      } else {
+        setWatchedMovies([]);
+      }
+    }
+  }, [showWatchedMovies]);
+
+  useEffect(() => {
+    if (showAlert) {
+      const timer = setTimeout(() => setShowAlert(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showAlert]);
 
   useEffect(() => {
     const getData = async () => {
@@ -34,26 +55,63 @@ const Rightside = ({ imdbId }: RightSideProps) => {
     getData();
   }, [imdbId]);
 
-if (!movie || showWatchedMovies)
-  return (
-    <div>
-      <div className="flex justify-between p-5 border-b rounded bg-white/10 backdrop-blur-md shadow-xl ring-1 ring-white/20">
-        <p className="text-2xl text-white">
-          Movies you watched 
-        </p>
-        <button 
-          onClick={() => setShowWatchedMovies(false)} 
-          className="border px-2.5 border-red-900 rounded-full text-white bg-red-800 outline-none"
-        >
-          X
-        </button>
+  // Add movie to localStorage
+  const handleAddToList = () => {
+    if (!movie) return;
+    const stored = localStorage.getItem("watchedMovies");
+    let movies: Movie[] = stored ? JSON.parse(stored) : [];
+    // Avoid duplicates by imdbId
+    if (!movies.some((m) => m.Title === movie.Title && m.Year === movie.Year)) {
+      movies.push(movie);
+      localStorage.setItem("watchedMovies", JSON.stringify(movies));
+      setShowAlert(true);
+    }
+  };
+
+  if (!movie || showWatchedMovies)
+    return (
+      <div>
+        <div className="flex justify-between p-5 border-b rounded bg-white/10 backdrop-blur-md shadow-xl ring-1 ring-white/20">
+          <p className="text-2xl text-white">Movies you watched</p>
+          <button
+            onClick={() => setShowWatchedMovies(false)}
+            className="border px-2.5 border-red-900 rounded-full text-white bg-red-800 outline-none"
+          >
+            X
+          </button>
+        </div>
+        {/* Watched movies list */}
+        <div className="p-4 space-y-3">
+          {watchedMovies.length === 0 ? (
+            <p className="text-white">No movies in your list yet.</p>
+          ) : (
+            watchedMovies.map((m, idx) => (
+              <div key={m.Title + m.Year + idx} className="flex items-center space-x-4 bg-white/10 p-2 rounded">
+                <img src={m.Poster} alt={m.Title} className="w-12 h-16 object-cover rounded" />
+                <div className="flex-1">
+                  <p className="text-white font-bold">{m.Title} ({m.Year})</p>
+                  <p className="text-white text-xs">{m.Actors}</p>
+                  <p className="text-white text-xs">Rated: {m.imdbRating}</p>
+                </div>
+                {/* Scissors SVG icon */}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-pink-400">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536M8.768 5.232l-3.536 3.536m0 6.464l3.536 3.536m6.464-3.536l3.536-3.536M9 12a3 3 0 11-6 0 3 3 0 016 0zm12 0a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+            ))
+          )}
+        </div>
       </div>
-      {/* Add your watched movies list here */}
-    </div>
-  );
+    );
 
   return (
-    <div className="text-white p-3 space-y-2">
+    <div className="text-white p-3 space-y-2 relative">
+      {/* Alert notification */}
+      {showAlert && (
+        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 z-50 bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 rounded shadow-lg text-lg font-semibold animate-bounce border-2 border-white">
+          Movie added to your list!
+        </div>
+      )}
       <div
         onClick={() => {
           setMovie(null);
@@ -97,8 +155,11 @@ if (!movie || showWatchedMovies)
       <StarRating />
 
       <div className="flex  justify-around ">
-        <button className="border p-1 rounded bg-green-700 outline-none border-green-700 ">
-          Add to my list{" "}
+        <button
+          className="border p-1 rounded bg-green-700 outline-none border-green-700 "
+          onClick={handleAddToList}
+        >
+          Add to my list
         </button>
         <button
           onClick={() => {

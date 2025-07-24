@@ -29,6 +29,6 @@ A sleek and responsive React + TypeScript application to search and explore movi
 ## 🛠️ Setup Instructions
 
 1. **Clone the repository**
-   ```bash
+ 
    git clone https://github.com/yourusername/movie-search-app.git
    cd movie-search-app
