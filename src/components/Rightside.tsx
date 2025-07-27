@@ -64,6 +64,7 @@ const Rightside = ({ imdbId }: RightSideProps) => {
     if (!movies.some((m) => m.Title === movie.Title && m.Year === movie.Year)) {
       movies.push(movie);
       localStorage.setItem("watchedMovies", JSON.stringify(movies));
+      setWatchedMovies(movies); // Update state immediately
       setShowAlert(true);
     }
   };
@@ -73,12 +74,7 @@ const Rightside = ({ imdbId }: RightSideProps) => {
       <div>
         <div className="flex justify-between p-5 border-b rounded bg-white/10 backdrop-blur-md shadow-xl ring-1 ring-white/20">
           <p className="text-2xl text-white">Movies you watched</p>
-          <button
-            onClick={() => setShowWatchedMovies(false)}
-            className="border px-2.5 border-red-900 rounded-full text-white bg-red-800 outline-none"
-          >
-            X
-          </button>
+        
         </div>
         {/* Watched movies list */}
         <div className="p-4 space-y-3">
@@ -164,6 +160,9 @@ const Rightside = ({ imdbId }: RightSideProps) => {
         <button
           onClick={() => {
             setMovie(null);
+            // Always reload watchedMovies from localStorage when showing the list
+            const stored = localStorage.getItem("watchedMovies");
+            setWatchedMovies(stored ? JSON.parse(stored) : []);
             setShowWatchedMovies(true);
           }}
           className="border p-1 rounded bg-red-700 outline-none border-red-700"

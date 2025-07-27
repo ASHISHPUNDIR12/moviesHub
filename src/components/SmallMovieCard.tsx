@@ -34,3 +34,4 @@ const SmallMovieCard = ({ title, year, imageId,imbId ,onCardClick }: SmallMovies
 };
 
 export default SmallMovieCard;
+  
