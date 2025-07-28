@@ -69,6 +69,14 @@ const Rightside = ({ imdbId }: RightSideProps) => {
     }
   };
 
+  const handleRemoveFromList = (title: string, year: string) => {
+    const updatedMovies = watchedMovies.filter(
+      (m) => !(m.Title === title && m.Year === year)
+    );
+    setWatchedMovies(updatedMovies);
+    localStorage.setItem("watchedMovies", JSON.stringify(updatedMovies));
+  };
+
   if (!movie || showWatchedMovies)
     return (
       <div>
@@ -90,7 +98,15 @@ const Rightside = ({ imdbId }: RightSideProps) => {
                   <p className="text-white text-xs">Rated: {m.imdbRating}</p>
                 </div>
                 {/* Scissors SVG icon */}
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-pink-400">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 text-pink-400 cursor-pointer"
+                  onClick={() => handleRemoveFromList(m.Title, m.Year)}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536M8.768 5.232l-3.536 3.536m0 6.464l3.536 3.536m6.464-3.536l3.536-3.536M9 12a3 3 0 11-6 0 3 3 0 016 0zm12 0a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
