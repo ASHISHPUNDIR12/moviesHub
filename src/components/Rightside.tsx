@@ -120,7 +120,7 @@ const Rightside = ({ imdbId }: RightSideProps) => {
     <div className="text-white p-3 space-y-2 relative">
       {/* Alert notification */}
       {showAlert && (
-        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 z-50 bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 rounded shadow-lg text-lg font-semibold animate-bounce border-2 border-white">
+        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 z-50 bg-gray-800 text-white px-3 py-1 rounded text-sm">
           Movie added to your list!
         </div>
       )}
